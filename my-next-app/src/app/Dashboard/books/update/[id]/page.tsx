@@ -3,7 +3,7 @@ import cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Update({ params }) {
+export default function Update({ params }: { params: { id: string } }) {
   const { id } = params;
   const token = cookies.get("token");
   
