@@ -1,7 +1,7 @@
 
 "use client"
 import { useRouter } from "next/navigation";
-export default function RemoveBtn({id}) {
+export default function RemoveBtn({id}:any) {
 console.log(id)
     const router = useRouter()
     const deleteBook = async () => {
