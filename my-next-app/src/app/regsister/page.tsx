@@ -9,13 +9,13 @@ export default function Register() {
     const [users, setUsers] = useState({ name: "", email: "", password: "", address:"",phone:"" })
     const router = useRouter();
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: any) => {
         
         const { name, value } = event.target;
         setUsers({ ...users, [name]: value })
 
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: any) => {
 
         event.preventDefault();
         const response = await fetch("http://localhost:3000/api/regsister", {

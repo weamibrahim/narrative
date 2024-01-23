@@ -8,7 +8,7 @@ import { FaRegEdit } from "react-icons/fa";
 ///import RemoveBtn from "../../components/RemoveBtn";
 import{ useState } from "react";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
 export default function AllBooks() {
 
@@ -19,7 +19,7 @@ export default function AllBooks() {
   if (!books) return <div>Loading...</div>;
 
 console.log(books)
-const handleDelete = async (bookId) => {
+const handleDelete = async (bookId: any) => {
   const token = cookies.get("token");
   try {
     // Make a DELETE request to your API to delete the book
@@ -67,8 +67,8 @@ const handleDelete = async (bookId) => {
                     <th>action</th>
                   </tr>
                 </thead>
-                {books.filter((item) => item.name && item.name.toLowerCase().includes(search.toLowerCase()))
-                                .map((item,index) => (
+                {books.filter((item: any) => item.name && item.name.toLowerCase().includes(search.toLowerCase()))
+                                .map((item : any,index : any) => (
                     <tbody        >
                       <tr key={item._id} className="my-2"> 
 

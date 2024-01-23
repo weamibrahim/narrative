@@ -17,7 +17,7 @@ const UpdateProfilePage = () => {
 
   
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: any) => {
         const { name, value } = event.target;
         setUser((prevUser) => ({
             ...prevUser,
@@ -25,7 +25,7 @@ const UpdateProfilePage = () => {
         }));
     }
 
-    const handleUpdateProfile = async (e) => {
+    const handleUpdateProfile = async (e: any) => {
         e.preventDefault();
         const response = await fetch(`http://localhost:3000/api/profile/${user._id}`, {
             method: 'PUT',

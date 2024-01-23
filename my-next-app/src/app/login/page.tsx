@@ -7,7 +7,7 @@ export default function Login() {
     const router = useRouter();
     const [user, setUser] = useState({ email: "", password: "" });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         try {

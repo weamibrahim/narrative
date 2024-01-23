@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import{ useState } from "react";
 
 const token = cookies.get("token");
-const fetcher = (url) => fetch(url
+const fetcher = (url: any) => fetch(url
     , {
         headers: {
           "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export default function AllUsers() {
   if (!users) return <div>Loading...</div>;
 
 console.log(users)
-const handleDelete = async (userId) => {
+const handleDelete = async (userId: any) => {
  
   try {
     // Make a DELETE request to your API to delete the user
@@ -73,8 +73,8 @@ const handleDelete = async (userId) => {
                     <th>action</th>
                   </tr>
                 </thead>
-                {users.filter((item) => item.name && item.name.toLowerCase().includes(search.toLowerCase()))
-                                .map((item,index) => (
+                {users.filter((item: any) => item.name && item.name.toLowerCase().includes(search.toLowerCase()))
+                                .map((item: any,index:any) => (
                     <tbody        >
                       <tr key={item._id} className="my-2"> 
 

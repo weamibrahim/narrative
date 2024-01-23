@@ -8,7 +8,7 @@ import { Carousel } from 'flowbite-react';
 import{ useState } from "react";
 
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function Home() {
 
@@ -75,12 +75,12 @@ console.log(books)
       <div className="container mx-auto">
         <div className="grid md:grid-cols-3  gap-x-4 gap-y-4 my-4 ">
   
-  {books.filter((item) => item.name && item.name.toLowerCase().includes(search.toLowerCase())||item.author && item.author.toLowerCase().includes(search.toLowerCase())
+  {books.filter((item: any) => item.name && item.name.toLowerCase().includes(search.toLowerCase())||item.author && item.author.toLowerCase().includes(search.toLowerCase())
   
 
 
 )
-  .map((item,index) => (
+  .map((item: any,index: any) => (
     
 
         <a key={index} href="#" className="flex flex-col items-center md:h-40  bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

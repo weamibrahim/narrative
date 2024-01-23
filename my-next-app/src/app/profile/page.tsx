@@ -3,7 +3,7 @@
 import Link from "next/link";
 import cookies from "js-cookie";
 export default function Profile() {
-  const user = cookies.get("user"); // Ensure a default empty object if 'user' is not present
+  const user = cookies.get("user")||"{}" ; // Ensure a default empty object if 'user' is not present
   const profile = JSON.parse(user);
 
   return (

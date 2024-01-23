@@ -1,5 +1,5 @@
 
-export default async function Book({ params }) {
+export default async function Book({ params}: { params: { id: string } }) {
     const { id } = params;
     const res = await fetch(`http://localhost:3000/api/books/${id}`,
     {
