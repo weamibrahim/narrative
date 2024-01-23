@@ -28,7 +28,7 @@ export default function Update({ params }: { params: { id: string } }) {
 
   const router = useRouter();
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setBook((prevBook) => ({
       ...prevBook,
@@ -36,7 +36,7 @@ export default function Update({ params }: { params: { id: string } }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
 
     // Update on the client side
