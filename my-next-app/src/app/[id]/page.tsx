@@ -1,9 +1,23 @@
 "use client";
+import cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 export default async function Book({ params}: { params: { id: string } }) {
+    const token = cookies.get("token");
+    const router = useRouter();
+    if (!token) {
+        router.push("/login"); // Replace "/login" with the actual login page URL
+        return null; // Stop further execution of the component
+      }
     const { id } = params;
-    const res = await fetch(`/api/books/${id}`,
+    const res = await fetch(`/api/books/${id}`,{
+        method:'GET',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+      })
     
-    );
+    ;
      const data = await res.json();
      
     const book = data.data

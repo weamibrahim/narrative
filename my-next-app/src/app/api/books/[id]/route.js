@@ -4,6 +4,11 @@ import {getToken,isValidToken} from "../../../../middleware/authToken"
 import { NextResponse } from "next/server";
 
 export async function GET(req,{params}) {
+  const token = await getToken(req);
+  
+  if (!isValidToken(token)) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
     const {id} = params;
    // console.log("id",params)
     await connectMongo();
