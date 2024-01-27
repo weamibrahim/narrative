@@ -165,13 +165,13 @@ function Header() {
             ) : (
               <>
                 <Link
-                  className="md:mx-3 text-lg hover:text-fuchsia-700"
+                  className="md:mx-3 text-lg hover:text-fuchsia-700 block"
                   href="/login"
                 >
                   Login
                 </Link>
                 <Link
-                  className="md:mx-3 text-lg hover:text-fuchsia-700"
+                  className="md:mx-3 text-lg hover:text-fuchsia-700 block"
                   href="/regsister"
                 >
                   Signup
