@@ -1,6 +1,6 @@
 import connectMongo from "../../../../libs/mongodb";
 import books from "../../../../models/books";
-import {getToken,isValidToken} from "../../../../components/authToken"
+import {getToken,isValidToken} from "../../../../middleware/authToken"
 import { NextResponse } from "next/server";
 
 export async function GET(req,{params}) {

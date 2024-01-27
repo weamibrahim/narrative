@@ -27,7 +27,7 @@ const UpdateProfilePage = () => {
 
     const handleUpdateProfile = async (e: any) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3000/api/profile/${user._id}`, {
+        const response = await fetch(`/api/profile/${user._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 
 export default async function Book({ params}: { params: { id: string } }) {
     const { id } = params;
-    const res = await fetch(`http://localhost:3000/api/books/${id}`,
+    const res = await fetch(`/api/books/${id}`,
     {
         cache: "force-cache",
     }

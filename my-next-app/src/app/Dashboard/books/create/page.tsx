@@ -22,7 +22,7 @@ const router = useRouter()
  
  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:3000/api/books", {
+    const response = await fetch("/api/books", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 import connectMongo from "../../../libs/mongodb";
 import users from "../../../models/users";
 import { NextResponse } from "next/server";
-import {getToken,isValidToken} from "../../../components/authToken"
+import {getToken,isValidToken} from "../../../middleware/authToken"
 
 export async function GET( req) {
     const token = await getToken(req);

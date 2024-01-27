@@ -19,7 +19,7 @@ const fetcher = (url: any) => fetch(url
 export default function AllUsers() {
 
   const[search, setSearch] = useState("");
-  const { data: users, error , mutate} = useSWR("http://localhost:3000/api/profile", fetcher);
+  const { data: users, error , mutate} = useSWR("/api/profile", fetcher);
 
   if (error) return <div>Error loading users</div>;
   if (!users) return <div>Loading...</div>;
@@ -29,7 +29,7 @@ const handleDelete = async (userId: any) => {
  
   try {
     // Make a DELETE request to your API to delete the user
-    await fetch(`http://localhost:3000/api/profile?id=${userId}`, {
+    await fetch(`/api/profile?id=${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

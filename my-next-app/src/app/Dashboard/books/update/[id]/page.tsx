@@ -15,7 +15,7 @@ export default function Update({ params }: { params: { id: string } }) {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/books/${id}`,{
+    fetch(`/api/books/${id}`,{
       method:'GET',
       
     })
@@ -43,7 +43,7 @@ export default function Update({ params }: { params: { id: string } }) {
     // ...
 
     // Send update to the server
-    const response = await fetch(`http://localhost:3000/api/books/${id}`, {
+    const response = await fetch(`/api/books/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
