@@ -15,6 +15,7 @@
     "flowbite-react": "^0.7.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "micro-cors": "^0.1.1",
     "mongoose": "^8.0.4",
     "next": "^14.0.4",
     "react": "^18",

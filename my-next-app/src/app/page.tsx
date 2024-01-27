@@ -10,7 +10,7 @@ import{ useState } from "react";
 
 const fetcher = (url: any) => fetch(url,
                         { 
-                         mode: 'no-cors',
+                          credentials: 'include',
                         }).then((res) => res.json());
 
 export default function Home() {
