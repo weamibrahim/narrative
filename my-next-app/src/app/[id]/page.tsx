@@ -2,9 +2,7 @@
 export default async function Book({ params}: { params: { id: string } }) {
     const { id } = params;
     const res = await fetch(`/api/books/${id}`,
-    {
-        cache: "force-cache",
-    }
+   
     );
      const data = await res.json();
      
