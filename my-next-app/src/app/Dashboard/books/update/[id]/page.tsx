@@ -17,7 +17,10 @@ export default function Update({ params }: { params: { id: string } }) {
   useEffect(() => {
     fetch(`/api/books/${id}`,{
       method:'GET',
-      
+      headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+      }
     })
       .then((res) => res.json())
       .then((data) => {
