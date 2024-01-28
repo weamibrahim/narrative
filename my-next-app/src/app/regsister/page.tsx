@@ -1,70 +1,208 @@
-"use client"
-
+ "use client"
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { useState } from "react";
-
 export default function Register() {
+  const router = useRouter();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    phone: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    
+  });
 
-    const [users, setUsers] = useState({ name: "", email: "", password: "", address:"",phone:"" })
-    const router = useRouter();
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+  };
 
-    const handleInputChange = (event: any) => {
-        
-        const { name, value } = event.target;
-        setUsers({ ...users, [name]: value })
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
 
+    // Validate inputs
+    let formIsValid = true;
+    const newErrors = { ...errors };
+
+    if (!user.name) {
+      newErrors.name = "Please enter your name.";
+      formIsValid = false;
     }
-    const handleSubmit = async (event: any) => {
 
-        event.preventDefault();
-        const response = await fetch("/api/regsister", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(users),
-        })
-        if (response.ok) {
-           // console.log("data", users)
-            router.push("/login")
-        }
+    if (!user.email ) {
+      newErrors.email = "Please enter a valid email address.";
+      formIsValid = false;
     }
-    return (
-        
-        <div className="shadow-2xl shadow-gray-700 w-full p-10">
-        <h1 className="text-3xl text-center font-bold mb-5">signup</h1>
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
-        <div className="mb-5">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="name" id="name" value={users.name} onChange={handleInputChange} />
-            </div>
-            <div className="mb-5">
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-           
-            <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="email" name="email" id="email" value={users.email} onChange={handleInputChange} />
-            </div>
-            <div className="mb-5">
-            <label htmlFor="password"className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-            <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="password" name="password" id="password" value={users.password} onChange={handleInputChange} />
-            </div>
-            <div className="mb-5">
-            <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-            <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="address" id=" address" value={users.address} onChange={handleInputChange} />
-            </div>
-            <div className="mb-5">
-                <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                <input className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" name="phone" id="phone" value={users.phone} onChange={handleInputChange} />
-                </div>
-            <div className="flex justify-center">
-            
-            <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">regsister
-            </button>
-       </div>
-        </form>
-        </div>
-       
+
+    if (!user.password || user.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+      formIsValid = false;
+    }
+
+    if (!user.address) {
+      newErrors.address = "Please enter your address.";
+      formIsValid = false;
+    }
+
    
-    )
 
+    setErrors(newErrors);
+
+    if (!formIsValid) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/regsister", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        router.push("/login");
+      } else {
+        if (response.status === 422) {
+          const errorData = await response.json();
+          console.error("Validation failed:", errorData.errors);
+
+          // Set errors based on the validation errors from the server
+          setErrors(errorData.errors);
+        } else {
+          console.error("An unexpected error occurred");
+        }
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  return (
+    <div className="shadow-2xl shadow-gray-700 w-full p-10">
+      <h1 className="text-3xl text-center font-bold mb-5">signup</h1>
+      <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+        <div className="mb-5">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Name
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+            "
+            type="text"
+            name="name"
+            id="name"
+            value={user.name}
+            onChange={handleInputChange}
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name}</p>
+          )}
+        </div>
+
+        <div className="mb-5">
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Email
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+            "
+            type="email"
+            name="email"
+            id="email"
+            value={user.email}
+            onChange={handleInputChange}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+        </div>
+
+        <div className="mb-5">
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Password
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+            "
+            type="password"
+            name="password"
+            id="password"
+            value={user.password}
+            onChange={handleInputChange}
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
+        </div>
+
+        <div className="mb-5">
+          <label
+            htmlFor="address"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Address
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+            "
+            type="text"
+            name="address"
+            id="address"
+            value={user.address}
+            onChange={handleInputChange}
+          />
+          {errors.address && (
+            <p className="text-red-500 text-sm">{errors.address}</p>
+          )}
+        </div>
+
+        <div className="mb-5">
+          <label
+            htmlFor="phone"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Phone
+          </label>
+          <input
+             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+             "
+            type="number"
+            name="phone"
+            id="phone"
+            value={user.phone}
+            onChange={handleInputChange}
+          />
+          
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
