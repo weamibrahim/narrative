@@ -17,12 +17,12 @@ export async function getToken(req) {
     const tokenValue = token.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
-        
-        return true;
+      const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
+      return decoded;
     } catch (error) {
-        console.error("Token verification error:", error);
-        return false;
+      console.error("Token verification error:", error);
+      return null;
     }
+    
 }
   
