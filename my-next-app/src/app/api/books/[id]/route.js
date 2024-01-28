@@ -2,6 +2,7 @@ import connectMongo from "../../../../libs/mongodb";
 import books from "../../../../models/books";
 import {getToken,isValidToken} from "../../../../middleware/authToken"
 import { NextResponse } from "next/server";
+import authorize from "../../../../middleware/authorization";
 
 export async function GET(req,{params}) {
   const token = await getToken(req);
@@ -19,9 +20,16 @@ export async function GET(req,{params}) {
 export async function PUT(req,{params}) {
     const token = await getToken(req);
 
-   if (!isValidToken(token)) {
+    const decodedToken = isValidToken(token);
+
+   if (!decodedToken) {
      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
    }
+ 
+   
+  if (!authorize(decodedToken.role)){
+    return NextResponse.json({ message: "Unauthorized for user" }, { status: 401 });
+  }
     const {id} = params;
  
     const {author, name,body}= await req.json();

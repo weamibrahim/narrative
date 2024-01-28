@@ -9,6 +9,7 @@ export async function POST(req) {
     
     const { email, password } = await req.json();
     //console.log(email, password);
+    await connectMongo();
     const user = await users.findOne({ email });
     if (!user) {
         return NextResponse.json({ message: "User not found" },{ status: 404 });

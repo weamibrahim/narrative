@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   const { name, email, password,address,phone,role } = await req.json();
   console.log(name, email, password,address,phone);
+  await connectMongo();
   const user = await users.findOne({ email });
 
   if (user) {
@@ -15,7 +16,6 @@ export async function POST(req) {
   // Hash the password before storing it
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await connectMongo();
   const newUser = await users.create({ name, email, password: hashedPassword ,address,phone,role});
   console.log(newUser);
 
