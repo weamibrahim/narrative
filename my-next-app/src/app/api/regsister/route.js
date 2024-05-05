@@ -10,7 +10,7 @@ export async function POST(req) {
   const user = await users.findOne({ email });
 
   if (user) {
-    return NextResponse.json({ message: "User already exists" });
+    return NextResponse.json({ errors: { email: "Email already exists" } }, { status: 422 });
   }
 
   // Hash the password before storing it

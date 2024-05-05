@@ -53,12 +53,11 @@ export default function Register() {
     }
 
    
+  
 
     setErrors(newErrors);
 
-    if (!formIsValid) {
-      return;
-    }
+   
 
     try {
       const response = await fetch("/api/regsister", {
@@ -74,9 +73,9 @@ export default function Register() {
       } else {
         if (response.status === 422) {
           const errorData = await response.json();
+          
           console.error("Validation failed:", errorData.errors);
 
-          // Set errors based on the validation errors from the server
           setErrors(errorData.errors);
         } else {
           console.error("An unexpected error occurred");

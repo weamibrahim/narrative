@@ -24,7 +24,7 @@ export default function AllUsers() {
   if (error) return <div>Error loading users</div>;
   if (!users) return <div>Loading...</div>;
 
-console.log(users)
+// console.log(users)
 const handleDelete = async (userId: any) => {
  
   try {
