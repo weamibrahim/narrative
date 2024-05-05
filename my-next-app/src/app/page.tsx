@@ -12,6 +12,7 @@ const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function Home() {
 
+  
   const[search, setSearch] = useState("");
   const { data: books, error , mutate} = useSWR("/api/books", fetcher);
 
