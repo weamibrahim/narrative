@@ -27,6 +27,7 @@ function Header() {
 
   const handleLogout = async () => {
     cookies.remove("token", { path: "/" });
+    cookies.remove("user", { path: "/" });
     router.push("/login");
   };
 
