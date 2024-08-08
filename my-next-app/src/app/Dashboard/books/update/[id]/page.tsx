@@ -2,7 +2,7 @@
 import cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import SideBar from "@/components/SideBar";
 export default function Update({ params }: { params: { id: string } }) {
   const { id } = params;
   const token = cookies.get("token");
@@ -67,9 +67,15 @@ export default function Update({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="shadow-2xl shadow-gray-700 w-full p-10">
-        <h1 className="text-3xl text-center font-bold mb-5">update book</h1>
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+    
+    <div className="flex justify-center">
+   
+        <SideBar/>
+
+        <main className="flex-1 p-4 overflow-y-auto background">
+    <div className="flex justify-center items-center  w-full p-10">
+        
+    <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto mt-10">
         <div className="mb-5">
           <label htmlFor="author" className="block font-bold mb-2">Author</label>
       <input
@@ -106,6 +112,9 @@ export default function Update({ params }: { params: { id: string } }) {
             </button>
        </div>
     </form>
+    </div>
+    </main>
+
     </div>
   );
 }

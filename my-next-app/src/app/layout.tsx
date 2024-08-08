@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '../components/header'
 import Footer from '../components/footer'
+import Script from 'next/script'
 import 'animate.css';
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <Script src="/scripts/toggle.js" strategy="beforeInteractive" />
         <Header/>
         {children}
         <Footer/>
+      
         </body>
+        
     </html>
   )
 }

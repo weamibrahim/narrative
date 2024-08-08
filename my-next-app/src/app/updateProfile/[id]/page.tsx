@@ -1,7 +1,7 @@
 "use client"
 import cookies from "js-cookie";
 import { useState } from "react";
-
+import { FaRegEdit } from "react-icons/fa";
 
 const UpdateProfilePage = () => {
     const userCookie = cookies.get("user");; // Ensure a default empty object if 'user' is not present
@@ -26,6 +26,7 @@ const UpdateProfilePage = () => {
     }
 
     const handleUpdateProfile = async (e: any) => {
+      
         e.preventDefault();
         const response = await fetch(`/api/profile/${user._id}`, {
             method: 'PUT',
@@ -41,7 +42,10 @@ const UpdateProfilePage = () => {
         if (response.ok) {
             const updateprofile = { ...user };
             cookies.set('user', JSON.stringify(updateprofile));
+           
             console.log('Profile updated successfully');
+            
+
            
         } else {
             console.error('Profile update failed');
@@ -49,7 +53,7 @@ const UpdateProfilePage = () => {
     }
 
     return (
-      
+      <div className="backgroundProfile">
                <div className="shadow-2xl shadow-gray-700 w-full p-10">
         <h1 className="text-3xl text-center font-bold mb-5">update profile</h1>
     <form onSubmit={handleUpdateProfile}className="max-w-sm mx-auto">
@@ -105,10 +109,11 @@ const UpdateProfilePage = () => {
 
                 <div className="flex justify-center">
             
-            <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">update profile
+            <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"><FaRegEdit className="text-2xl"/>
             </button>
        </div>
             </form>
+        </div>
         </div>
     )
 }

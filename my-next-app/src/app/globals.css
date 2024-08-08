@@ -2,3 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Add in your global CSS or Tailwind configuration */
+#default-sidebar {
+    transition: transform 0.3s ease;
+  }
+  
+  .-translate-x-full {
+    transform: translateX(-100%);
+  }
+  
+  .translate-x-0 {
+    transform: translateX(0);
+  }
+  
+  .background{
+    background-image: url('https://img.freepik.com/free-photo/single-fake-purple-flower-inside-closed-notebook-stained-background_23-2147925563.jpg?t=st=1722882034~exp=1722885634~hmac=d15dec75b16b3433c3994c4616acae9eca8dc0fc5ad3294656bf6fafd134d476&w=1060');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .backgroundImage{
+    background-image: url("https://img.freepik.com/free-photo/beautiful-landscape-from-magazine-coming-life_23-2151158551.jpg?t=st=1722979052~exp=1722982652~hmac=881c08f6669f5fe1f01d789f3d3fd2dba7ee9f776496f1bdd09028a309b4617a&w=1060");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .backgroundProfile{
+    background-image: url("https://img.freepik.com/free-photo/beautiful-landscape-from-magazine-coming-life_23-2151158554.jpg?ga=GA1.1.1070693569.1706463458&semt=ais_hybrid");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }

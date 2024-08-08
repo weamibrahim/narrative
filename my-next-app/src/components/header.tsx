@@ -1,29 +1,29 @@
 "use client";
-import { IoBook } from "react-icons/io5";
-import { IoPersonOutline } from "react-icons/io5";
+import { IoBook, IoPersonOutline } from "react-icons/io5";
+import { MdLogout } from "react-icons/md";
 import Link from "next/link";
 import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { MdLogout } from "react-icons/md";
-import { useEffect } from 'react';  // Import the useEffect hook
+import { useEffect, useState } from "react";
 
 function Header() {
   const router = useRouter();
-  const existingToken = cookies.get("token");
-  const existingUserString = cookies.get("user");
-  const existingUser = existingUserString ? JSON.parse(existingUserString) : null;
-
-  const isLoggedIn = existingToken;
-  const isAdmin = existingUser && existingUser.role === "admin";
-  console.log(existingUser);
-  console.log("isAdmin", isAdmin);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(null); 
 
   useEffect(() => {
-    // Redirect to home page if user is not an admin
-    if (!isAdmin) {
+    const token = cookies.get("token");
+    const userString = cookies.get("user");
+    const user = userString ? JSON.parse(userString) : null;
+
+    setIsLoggedIn(!!token);
+    setIsAdmin(user?.role === "admin");
+
+    
+    if (user && user.role !== "admin") {
       router.push('/');
     }
-  }, [isAdmin, router]);
+  }, [router]);
 
   const handleLogout = async () => {
     cookies.remove("token", { path: "/" });
@@ -32,160 +32,70 @@ function Header() {
   };
 
   return (
-    <div>
-      <div className="text-xl p-1 bg-fuchsia-700 text-right">
-       
-      </div>
-      <nav className="bg-gray-200">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <IoBook className="text-2xl text-fuchsia-700 mr-2" />
-              <span style={{ fontFamily: "cursive" }} className="text-xl ">
-               narrative
-              </span>
-            </div>
-
-            <div className="hidden sm:flex ml-6 items-center">
-              <div className="flex">
-                <Link className="md:mx-3 text-lg hover:text-fuchsia-700" href="/">
-                  Home
-                </Link>
-                
-                {/* Add a dropdown under the "Dashboard" link */}
-                {isAdmin && (
-            <div className="group relative">
-              <p
-                className="md:mx-3 text-lg hover:text-fuchsia-700"
-                
-              >
-                Dashboard
-              </p>
-              <div className="hidden group-hover:block absolute z-10 bg-white shadow-lg rounded-md mt-2 space-y-2">
-                <Link
-                  className="block px-4 py-2 text-sm text-fuchsia-700"
-                  href="/Dashboard/books"
-                >
-                  Books
-                </Link>
-                <Link
-                  className="block px-4 py-2 text-sm text-fuchsia-700"
-                  href="/Dashboard/users"
-                >
-                  Users
-                </Link>
-              </div>
-            </div>)}
-
-
-
-
-                {isLoggedIn ? (
-                  <>
-                    <Link
-                      className="md:mx-3 text-lg hover:text-fuchsia-700"
-                      href="/profile"
-                    >
-                    <IoPersonOutline className="text-2xl text-fuchsia-700 mr-2" />
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="md:mx-3 text-lg hover:text-fuchsia-700 block"
-                    >
-                      <MdLogout className="text-2xl text-fuchsia-700 mr-2" />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      className="md:mx-3 text-lg hover:text-fuchsia-700"
-                      href="/login"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      className="md:mx-3 text-lg hover:text-fuchsia-700"
-                      href="/regsister"
-                    >
-                      Signup
-                    </Link>
-                  </>
-                )}
-              </div>
-            </div>
-
-          </div>
+    <nav className="bg-gray-100 border-gray-500 dark:bg-gray-900">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <IoBook className="text-2xl text-fuchsia-700" />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white" style={{ fontFamily: 'cursive' }}>
+            Narrative
+          </span>
         </div>
-
-        <div className="sm:hidden" id="mobile-menu">
-          <div className="space-y-1 px-2 pb-3 pt-2">
-            <Link
-              className="md:mx-3 bg-fuchsia-700 text-white block rounded-md px-3 py-2 text-base font-medium "
-              href="/"
-            >
-              Home
-            </Link>
-
-            
+        <button id="navbar-toggle" data-collapse-toggle="navbar-menu" type="button" 
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
+          aria-controls="navbar-menu" aria-expanded="false">
+          <span className="sr-only">Open main menu</span>
+          <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+        </button>
+        <div className="hidden w-full md:flex md:w-auto" id="navbar-default">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  bg-gray-100 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 sm:bg-white md:bg-gray-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+              <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/">
+                Home
+              </Link>
+            </li>
             {isAdmin && (
-            <div className="group relative">
-              <p
-                className="md:mx-3 text-lg hover:text-fuchsia-700"
-               
-              >
-                Dashboard
-              </p>
-              <div className="hidden group-hover:block absolute z-10 bg-white shadow-lg rounded-md mt-2 space-y-2">
-                <Link
-                  className="block px-4 py-2 text-sm text-fuchsia-700"
-                  href="/Dashboard/books"
-                >
-                  Books
+              <li>
+                <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/Dashboard/books">
+                  Dashboard
                 </Link>
-                <Link
-                  className="block px-4 py-2 text-sm text-fuchsia-700"
-                  href="/Dashboard/users"
-                >
-                  Users
-                </Link>
-              </div>
-            </div>)}
-
+              </li>
+            )}
             {isLoggedIn ? (
               <>
-                <Link
-                  className="md:mx-3 text-lg hover:text-fuchsia-700"
-                  href="/profile"
-                >
-                  <IoPersonOutline  className="text-2xl text-fuchsia-700 mr-2"/>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="md:mx-3 text-lg hover:text-fuchsia-700 block"
-                >
-                   <MdLogout className="text-2xl text-fuchsia-700 mr-2" />
-                </button>
+                <li>
+                  <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/profile">
+                    <IoPersonOutline className="text-2xl text-fuchsia-700" />
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    <MdLogout className="text-2xl text-fuchsia-700" />
+                  </button>
+                </li>
               </>
             ) : (
               <>
-                <Link
-                  className="md:mx-3 text-lg hover:text-fuchsia-700 block"
-                  href="/login"
-                >
-                  Login
-                </Link>
-                <Link
-                  className="md:mx-3 text-lg hover:text-fuchsia-700 block"
-                  href="/regsister"
-                >
-                  Signup
-                </Link>
+                <li>
+                  <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/login">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/register">
+                    Signup
+                  </Link>
+                </li>
               </>
             )}
-          </div>
+          </ul>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
 

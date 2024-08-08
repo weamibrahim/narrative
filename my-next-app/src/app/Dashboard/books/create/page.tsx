@@ -2,7 +2,7 @@
 "use client"
 
 import {  useState } from "react";
-
+import SideBar from "@/components/SideBar";
 import cookies from "js-cookie";
 import { useRouter} from "next/navigation";
 
@@ -35,9 +35,15 @@ const router = useRouter()
     }
  };
  return (
-  <div className="shadow-2xl shadow-gray-700 w-full p-10">
-        <h1 className="text-3xl text-center font-bold mb-5">create book</h1>
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+
+  <div className="flex justify-center">
+   
+  <SideBar/>
+
+  <main className="flex-1 p-4 overflow-y-auto background">
+<div className="flex justify-center items-center  w-full p-10">
+        
+    <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto mt-10">
         <div className="mb-5">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
     <input type="text" name="name" value={books.name} onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
@@ -52,7 +58,7 @@ const router = useRouter()
   </div>
   <br />
   <div className="mb-5">
-  <label htmlFor="body" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">boody</label>
+  <label htmlFor="body" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">body</label>
     <input type="text" name="body" value={books.body} onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   </div>
   <br />
@@ -62,6 +68,8 @@ const router = useRouter()
             </button>
        </div>
     </form>
+</div>
+</main>
 </div>
 
 

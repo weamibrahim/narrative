@@ -6,6 +6,8 @@ import Link from "next/link";
 import { MdDelete } from "react-icons/md";
 ///import RemoveBtn from "../../components/RemoveBtn";
 import{ useState } from "react";
+import SideBar from "@/components/SideBar";
+import Loading from "@/components/Loading";
 
 const token = cookies.get("token");
 const fetcher = (url: any) => fetch(url
@@ -22,7 +24,7 @@ export default function AllUsers() {
   const { data: users, error , mutate} = useSWR("/api/profile", fetcher);
 
   if (error) return <div>Error loading users</div>;
-  if (!users) return <div>Loading...</div>;
+  if (!users) return <div><Loading/></div>;
 
 // console.log(users)
 const handleDelete = async (userId: any) => {
@@ -46,16 +48,17 @@ const handleDelete = async (userId: any) => {
 
 
     return (
-        <div>
+      <div className="flex justify-center">
+   
+      <SideBar/>
+
+      <main className="flex-1 p-4 overflow-y-auto background">
         <div className="flex justify-center  my-4">
           <IoSearch className="text-4xl text-fuchsia-700 mx-2" />
           <input type="text" className=" w-64 h-75 border-fuchsia-700 border-4 rounded-md" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)}/>
         </div>
   
-        <div className="flex flex-col md:flex-row md:justify-evenly my-5">
-      <button type="button" className="btn-style md:btn-md  focus:outline-none text-white bg-fuchsia-700 hover:bg-fuchsia-900 focus:ring-4 focus:ring-fuchsia-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-fuchsia-900 "><Link href="/Dashboard/users/create">Add user</Link></button>
-
-  </div>
+      
   
        
       <div  className="container mx-auto" >
@@ -73,21 +76,22 @@ const handleDelete = async (userId: any) => {
                     <th>action</th>
                   </tr>
                 </thead>
+                <tbody        >
                 {users.filter((item: any) => item.name && item.name.toLowerCase().includes(search.toLowerCase()))
                                 .map((item: any,index:any) => (
-                    <tbody        >
+                    
                       <tr key={item._id} className="my-2"> 
 
                        
-                        <td className="px-6 py-3 ">{item.name}</td>
-                        <td className="px-6 py-3 ">{item.email}</td>
+                        <td className="px-6 py-3 text-xl text-white ">{item.name}</td>
+                        <td className="px-6 py-3 text-xl text-white ">{item.email}</td>
                        
                         <td>
                         <button
             type="button"
             onClick={() => handleDelete(item._id)}
-            className="text-red-700 hover:text-white border border-red-700 hover:bg-fuchsia-700 focus:ring-4 focus:outline-none focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-700 dark:text-red-700 dark:hover:text-white dark:hover:bg-red-900 dark:focus:ring-red-900"
-          ><MdDelete /></button> 
+            className=" hover:text-red-700 text-white border border-red-700  hover:border-white bg-red-700 hover:bg-white focus:ring-4 focus:outline-none focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-700 dark:text-red-700 dark:hover:text-white dark:hover:bg-white dark:focus:ring-red-900"
+          ><MdDelete className="text-2xl" /></button> 
           
         
           
@@ -96,8 +100,9 @@ const handleDelete = async (userId: any) => {
                        
                       </tr>
 
-                    </tbody>
+                    
                   ))}
+                  </tbody>
               </table>
 
     
@@ -108,6 +113,7 @@ const handleDelete = async (userId: any) => {
   </div>
   </div>
        
+       </main>
       </div>
   
   
