@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import "../globals.css";
 import Loading from "@/components/Loading";
 export default function Book({ params}: { params: { id: string } }) {
-  const [book, setBook] = useState(null);
+  const [book, setBook] = useState<any>(null); 
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
