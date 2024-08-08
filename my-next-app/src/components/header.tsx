@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(null); 
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
 
   useEffect(() => {
     const token = cookies.get("token");
