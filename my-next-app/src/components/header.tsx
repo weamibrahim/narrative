@@ -22,7 +22,7 @@ function Header() {
     
     if (user && user.role !== "admin") {
       router.push('/');
-    }
+    } 
   }, [router]);
 
   const handleLogout = async () => {

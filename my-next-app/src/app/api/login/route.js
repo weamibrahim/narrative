@@ -12,11 +12,11 @@ export async function POST(req) {
     await connectMongo();
     const user = await users.findOne({ email });
     if (!user) {
-        return NextResponse.json({ message: "User not found" },{ status: 404 });
+        return NextResponse.json({ errors:{email:"Email not found"}},{ status: 404 });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        return NextResponse.json({ message: "Invalid password" } ,{ status: 401 });
+        return NextResponse.json({ errors:{password:"Wrong password"} } ,{ status: 401 });
     }
      const tokenData ={
         id:user._id,

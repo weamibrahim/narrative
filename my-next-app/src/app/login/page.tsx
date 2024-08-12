@@ -49,12 +49,13 @@ export default function Login() {
       } else {
         if (response.status === 401) {
           const errorData = await response.json();
-          console.error("Login failed:", errorData.message);
-          setErrors({ ...errors, email: errorData.message });
+          console.error("Login failed:", errorData.errors);
+          
+          setErrors({ ...errors, password: errorData.errors.password });
         } else if (response.status === 404) {
           const errorData = await response.json();
-          console.error("User not found:", errorData.message);
-          setErrors({ ...errors, email: errorData.message });
+          console.error("User not found:", errorData.errors.email);
+          setErrors({ ...errors, email: errorData.errors.email });
         } else {
           console.error("An unexpected error occurred");
         }
@@ -65,7 +66,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen">
+    <div className="flex flex-col md:flex-row w-full h-full">
       <div className=" md:flex md:w-1/2 md:h-screen sm:w-64 bg-cover bg-center" >
         <img src="https://img.freepik.com/free-vector/literature-concept-illustration_114360-8403.jpg?t=st=1722981509~exp=1722985109~hmac=97e97fb516be86624c2cdc965b6c45608e1d3b276be0709a130efb1e1fdf260d&w=740"/>
       </div>

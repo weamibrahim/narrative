@@ -54,7 +54,7 @@ export default function Register() {
     setErrors(newErrors);
 
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/regsister", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen">
+    <div className="flex flex-col md:flex-row w-full h-full">
       <div className=" md:flex md:w-1/2 sm:w-64  bg-cover bg-center">
       <img src="https://img.freepik.com/free-photo/view-3d-islamic-quran-book_23-2151112585.jpg?ga=GA1.1.1070693569.1706463458&semt=ais_hybrid'" alt="login" />
 
