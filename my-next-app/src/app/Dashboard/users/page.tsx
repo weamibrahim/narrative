@@ -8,7 +8,8 @@ import { MdDelete } from "react-icons/md";
 import{ useState } from "react";
 import SideBar from "@/components/SideBar";
 import Loading from "@/components/Loading";
-import cookies from "js-cookie";
+
+
 const token = cookies.get("token");
 const fetcher = (url: any) => fetch(url
     , {
