@@ -4,15 +4,15 @@ import { MdLogout } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import cookies from "js-cookie";
 function Header() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userString = localStorage.getItem("user");
+    const token = cookies.get("token");
+    const userString = cookies.get("user");
     const user = userString ? JSON.parse(userString) : null;
 
     const isLoggedIn = !!token;

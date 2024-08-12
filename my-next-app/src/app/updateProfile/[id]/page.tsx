@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
-
+import cookies from "js-cookie";
 const UpdateProfilePage = () => {
-    const dataOfUser = localStorage.getItem("user");; // Ensure a default empty object if 'user' is not present
-    const token = localStorage.getItem("token");
+    const dataOfUser = cookies.get("user");; // Ensure a default empty object if 'user' is not present
+    const token = cookies.get("token");
     const profile = JSON.parse(dataOfUser || "{}");
     const [user, setUser] = useState({
         name: profile.name,

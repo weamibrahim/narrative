@@ -22,7 +22,7 @@ export default function AllBooks() {
 
   console.log(books)
   const handleDelete = async (bookId: any) => {
-    const token = localStorage.getItem("token");
+    const token = cookies.get("token");
     try {
       // Make a DELETE request to your API to delete the book
       await fetch(`/api/books?id=${bookId}`, {
