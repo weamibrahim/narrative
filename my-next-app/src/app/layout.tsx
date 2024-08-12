@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Script src="/scripts/toggle.js" strategy="beforeInteractive" />
+      <Script src="/Scripts/toggle.js" strategy="beforeInteractive" />
         <Header/>
         {children}
         <Footer/>
