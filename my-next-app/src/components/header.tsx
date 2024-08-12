@@ -2,7 +2,6 @@
 import { IoBook, IoPersonOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
 import Link from "next/link";
-import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,22 +11,25 @@ function Header() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
 
   useEffect(() => {
-    const token = cookies.get("token");
-    const userString = cookies.get("user");
+    const token = localStorage.getItem("token");
+    const userString = localStorage.getItem("user");
     const user = userString ? JSON.parse(userString) : null;
 
-    setIsLoggedIn(!!token);
+    const isLoggedIn = !!token;
+    setIsLoggedIn(isLoggedIn);
     setIsAdmin(user?.role === "admin");
-
     
     if (user && user.role !== "admin") {
       router.push('/');
     } 
-  }, [router]);
+    
+    }, [ router]);
 
   const handleLogout = async () => {
-    cookies.remove("token", { path: "/" });
-    cookies.remove("user", { path: "/" });
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    setIsAdmin(null);
     router.push("/login");
   };
 
@@ -49,13 +51,13 @@ function Header() {
           </svg>
         </button>
         <div className="hidden w-full md:flex md:w-auto" id="navbar-default">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  bg-gray-100 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 sm:bg-white md:bg-gray-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-100 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 sm:bg-white md:bg-gray-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/">
                 Home
               </Link>
             </li>
-            {isAdmin && (
+            {isAdmin && isLoggedIn && (
               <li>
                 <Link className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="/Dashboard/books">
                   Dashboard

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import cookies from "js-cookie";
+// import cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "../globals.css";
@@ -13,7 +13,7 @@ export default function Book({ params}: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchBook = async () => {
-      const token = cookies.get("token");
+      const token = localStorage.getItem("token");
 
       if (!token) {
         router.push("/login"); // Replace "/login" with the actual login page URL

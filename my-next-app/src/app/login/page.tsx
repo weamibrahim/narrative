@@ -46,6 +46,12 @@ export default function Login() {
 
       if (response.ok) {
         router.push("/");
+        const data = await response.json();
+
+       localStorage.setItem("token", data.token);
+       localStorage.setItem("user", JSON.stringify(data.user));
+       
+       
       } else {
         if (response.status === 401) {
           const errorData = await response.json();

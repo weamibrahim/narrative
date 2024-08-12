@@ -3,11 +3,11 @@
 
 import {  useState } from "react";
 import SideBar from "@/components/SideBar";
-import cookies from "js-cookie";
+//import cookies from "js-cookie";
 import { useRouter} from "next/navigation";
 
 export default   function create(){
-  const token = cookies.get("token");
+  const token = localStorage.getItem("token");
   console.log("token",token)
 const [books , setBooks] = useState({
   author: "",

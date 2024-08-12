@@ -1,12 +1,12 @@
 "use client"
-import cookies from "js-cookie";
+
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 
 const UpdateProfilePage = () => {
-    const userCookie = cookies.get("user");; // Ensure a default empty object if 'user' is not present
-    const token = cookies.get("token");
-    const profile = JSON.parse(userCookie || "{}");
+    const dataOfUser = localStorage.getItem("user");; // Ensure a default empty object if 'user' is not present
+    const token = localStorage.getItem("token");
+    const profile = JSON.parse(dataOfUser || "{}");
     const [user, setUser] = useState({
         name: profile.name,
         email: profile.email,
@@ -41,7 +41,7 @@ const UpdateProfilePage = () => {
 
         if (response.ok) {
             const updateprofile = { ...user };
-            cookies.set('user', JSON.stringify(updateprofile));
+           localStorage.setItem('user', JSON.stringify(updateprofile));
            
             console.log('Profile updated successfully');
             

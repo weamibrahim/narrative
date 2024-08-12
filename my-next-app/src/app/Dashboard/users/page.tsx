@@ -9,7 +9,7 @@ import{ useState } from "react";
 import SideBar from "@/components/SideBar";
 import Loading from "@/components/Loading";
 
-const token = cookies.get("token");
+const token = localStorage.getItem("token");
 const fetcher = (url: any) => fetch(url
     , {
         headers: {

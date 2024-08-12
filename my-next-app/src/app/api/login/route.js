@@ -27,9 +27,9 @@ export async function POST(req) {
           console.log("token",token)
 
          
-      const response =NextResponse.json({ user,status: 200  })
-      response.cookies.set("token", token);
-      response.cookies.set("user",JSON.stringify(user));
+      const response =NextResponse.json({ user,status: 200 ,token })
+    //   response.cookies.set("token", token);
+    //   response.cookies.set("user",JSON.stringify(user));
             //    response.cookies.set("token", token, { httpOnly: true,path:"/",secure: true});
 
    console.log(response)
