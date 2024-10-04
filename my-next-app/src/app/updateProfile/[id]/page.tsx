@@ -41,7 +41,7 @@ const UpdateProfilePage = () => {
 
         if (response.ok) {
             const updateprofile = { ...user };
-           localStorage.setItem('user', JSON.stringify(updateprofile));
+           cookies.set("user", JSON.stringify(updateprofile));
            
             console.log('Profile updated successfully');
             
