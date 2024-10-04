@@ -26,10 +26,11 @@ function Header() {
     }, [ router]);
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    cookies.remove("token");
+    cookies.remove("user");
     setIsLoggedIn(false);
     setIsAdmin(null);
+
     router.push("/login");
   };
 

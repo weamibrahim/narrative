@@ -78,8 +78,9 @@ console.log(books)
     
 
         <div key={index} className="flex flex-col items-center md:h-40  bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-      <img className="object-cover h-full   rounded-t-lg md:w-1/2  md:rounded-none md:rounded-s-lg" 
-      src="https://img.freepik.com/free-photo/beautiful-landscape-from-magazine-coming-life_23-2151158565.jpg?t=st=1723133762~exp=1723137362~hmac=b22e921cd97ef6490b23ca43c2cbbdcae8d0f733406cb2354a539faf28e9f035&w=1060" alt=""/>
+      {/* <img className="object-cover h-full   rounded-t-lg md:w-1/2  md:rounded-none md:rounded-s-lg" 
+      src="https://img.freepik.com/free-photo/beautiful-landscape-from-magazine-coming-life_23-2151158565.jpg?t=st=1723133762~exp=1723137362~hmac=b22e921cd97ef6490b23ca43c2cbbdcae8d0f733406cb2354a539faf28e9f035&w=1060" alt=""/> */}
+      <img className="object-cover h-full w-full rounded-t-lg md:w-1/2  md:rounded-none md:rounded-s-lg" src="/images/image.gif" alt=""/>
       <div className="flex flex-col  h-full p-4 leading-normal  md:w-1/2 ">
           <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{item.author}</h5>
          

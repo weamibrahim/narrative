@@ -2,11 +2,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
 export default function Login() {
   const router = useRouter();
   const [user, setUser] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
-
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
+  const userString = Cookies.get("user");
+  const DatOfUser = userString ? JSON.parse(userString) : null;
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -44,8 +47,13 @@ export default function Login() {
         body: JSON.stringify(user),
       });
 
+      setIsAdmin(DatOfUser?.role === "admin");
       if (response.ok) {
+      if(isAdmin){
+        router.push("/Dashboard/books");
+      }else{
         router.push("/");
+      }
        
        
        

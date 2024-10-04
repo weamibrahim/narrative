@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import cookies from "js-cookie";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "../globals.css";
@@ -13,11 +13,10 @@ export default function Book({ params}: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchBook = async () => {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token"); 
 
       if (!token) {
-        router.push("/login"); // Replace "/login" with the actual login page URL
-        return;
+        router.push("/login"); 
       }
 
       const { id } = params;
@@ -35,7 +34,7 @@ export default function Book({ params}: { params: { id: string } }) {
     };
 
     fetchBook();
-  }, [book]);
+  }, [params.id, router]);
 
   if (isLoading) {
     return <div><Loading /></div>;
