@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import cookies from "js-cookie";
+import RootLayout from "@/app/layout";
 const UpdateProfilePage = () => {
     const dataOfUser = cookies.get("user");; // Ensure a default empty object if 'user' is not present
     const token = cookies.get("token");
@@ -12,7 +13,9 @@ const UpdateProfilePage = () => {
         email: profile.email,
         _id: profile._id,
         address: profile.address,
-        phone: profile.phone
+        phone: profile.phone,
+        role: profile.role
+
     });
 
   
